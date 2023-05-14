@@ -1,12 +1,12 @@
-import { BoardState } from '../models';
+import type { BoardState } from './types';
 
-export function dataGenerator(
+export function minesGenerator(
   mines: number,
   board: BoardState,
   r: number,
   c: number
-): any[] {
-  let minesPlacement: any[] = [];
+): Record<number, number> {
+  let minesPlacement: number[] = [];
   let forbiddenSqArr: number[] = [];
   if (r >= 0 && c >= 0) {
     forbiddenSqArr = getForbiddenSquares(r, c, board);
@@ -73,7 +73,7 @@ export function getForbiddenSquares(
   col: number,
   board: BoardState
 ): number[] {
-  let forbidden: number[] = [];
+  const forbidden: number[] = [];
   for (let r = row - 1; r <= row + 1; r++) {
     for (let c = col - 1; c <= col + 1; c++) {
       if (board[r] && board[r][c]) {
