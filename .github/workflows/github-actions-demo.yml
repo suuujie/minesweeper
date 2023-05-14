@@ -2,24 +2,17 @@ name: GitHub Actions Demo
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on:
   push:
-    branches: [main]
+    branches: [main, develop]
 
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [16.x]
+        hostname: [CONfI, SECRET]
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: Install dependencies
-        run: npm ci
-      - name: Build application
-        run: npm run build --if-present
-        env:
-          CI: false
+      - name: test secret
+        run: |
+          echo "TESTING...."
+          echo ${{ secrets[format('{0}_PASSWORD', matrix.hostname )] }}
+          echo ${{ secrets[format('{0}_USERNAME', matrix.hostname )] }}

@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { BoardState, TileState } from '../models';
+import type { BoardState, TileState } from '../lib/types';
 
 type MinesCounterProps = {
   board: BoardState;

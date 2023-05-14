@@ -1,26 +1,30 @@
 import { useEffect, useState } from 'react';
-import { GameState } from '../common/constants';
+import { GAME_STATE, type GameState } from '../lib/constants/enums';
 
 type TimerProps = {
-  start: `${GameState}`;
+  start: GameState;
 };
 
 export const Timer = ({ start }: TimerProps) => {
   const [timer, setTimer] = useState(0);
 
   useEffect(() => {
-    let interval: any;
-    if (start === GameState.START) {
-      interval = setInterval(() => {
-        setTimer((timer) => timer + 1);
-      }, 1000);
-      return () => {
+    let interval: number = 0;
+    switch (start) {
+      case GAME_STATE.START:
+        interval = setInterval(() => {
+          setTimer((timer) => timer + 1);
+        }, 1000);
+        return () => {
+          clearInterval(interval);
+        };
+      case GAME_STATE.WIN:
+      case GAME_STATE.LOSE:
         clearInterval(interval);
-      };
-    } else if (start === GameState.WIN || start === GameState.LOSE) {
-      clearInterval(interval);
-    } else {
-      setTimer(0);
+        break;
+      default:
+        setTimer(0);
+        break;
     }
   }, [start]);
 

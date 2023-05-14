@@ -1,27 +1,32 @@
-import { easy, GameState, hard, med } from '../common/constants';
-import { BoardSettings, Device, DeviceSettings } from '../models';
+import {
+  EASY_BOARD_SETTINGS,
+  MED_BOARD_SETTINGS,
+  HARD_BOARD_SETTINGS,
+} from '../lib/constants';
+import { GAME_STATE, type GameState } from '../lib/constants/enums';
+import type { BoardSettings, Device, DeviceSettings } from '../lib/types';
 
 type DifficultyButtonsProps = {
   device: Device;
-  setStart: (start: `${GameState}`) => void;
+  changeGameState: (gameState: GameState) => void;
   setBoardSettings: (settings: BoardSettings) => void;
 };
 
 export const DifficultyButtons = ({
   device,
-  setStart,
+  changeGameState,
   setBoardSettings,
 }: DifficultyButtonsProps) => {
-  const handleClick = (diff: DeviceSettings) => {
-    setBoardSettings(diff[device]);
-    setStart(GameState.IDLE);
+  const handleClick = (settings: DeviceSettings) => {
+    setBoardSettings(settings[device]);
+    changeGameState(GAME_STATE.IDLE);
   };
 
   return (
     <div className="button-group">
-      <button onClick={() => handleClick(easy)}>Easy</button>
-      <button onClick={() => handleClick(med)}>Medium</button>
-      <button onClick={() => handleClick(hard)}>Hard</button>
+      <button onClick={() => handleClick(EASY_BOARD_SETTINGS)}>Easy</button>
+      <button onClick={() => handleClick(MED_BOARD_SETTINGS)}>Medium</button>
+      <button onClick={() => handleClick(HARD_BOARD_SETTINGS)}>Hard</button>
     </div>
   );
 };
